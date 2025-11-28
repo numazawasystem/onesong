@@ -1,0 +1,175 @@
+//canvas用フラグ
+var array = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+
+// ドラッグ＆ドロップイベント発生時に実行する関数
+function setListeners(event){
+	// ブラウザ標準の動作をキャンセル
+	event.preventDefault();
+	
+	// --------------------
+	//	引数チェック
+	// --------------------
+	var file = event.dataTransfer.files[0];
+	var eid = event.target.id.slice(-2);
+		
+	if(array[Number(eid)-1] == 0){
+		// ファイルタイプ(MIME)で対応しているファイルか判定
+		if (!file.type.match(/image\/\w+/)){
+			alert('画像ファイル以外は利用できません');
+			return;
+		}
+
+		// --------------------
+		//	ファイル読み込み
+		// --------------------
+		var cve01 = event.target;
+		if (cve01.getContext) {
+			var ctx01 = cve01.getContext('2d');
+
+			var img = new Image();
+			var fr  = new FileReader();
+			
+			// 画像ファイル読み込み完了後に実行する処理
+			fr.onload = function(evt) {
+				// 画像読み込み完了後に実行する処理
+				img.onload = function () {
+					// canvasサイズを画像サイズに合わせて描画
+					//横２００、縦自動計算でスタイルシートで強制縮小
+					var wh = 200;
+					var ht = (200 * img.naturalHeight)/img.naturalWidth;
+					cve01.setAttribute('width',  img.naturalWidth);
+					cve01.setAttribute('height', img.naturalHeight);
+					// 描画
+					ctx01.drawImage(img, 0, 0, img.naturalWidth, img.naturalHeight);
+					cve01.style.width = wh + "px";
+					cve01.style.height = ht + "px";
+					
+					var listX;
+					var listY;
+					var stx;
+					var sty;
+					// リスト用画像に転記
+					//縦横200pxに変換縮小
+					if(img.naturalWidth > img.naturalHeight){
+						listX = 200;
+						listY = (img.naturalHeight * 200)/img.naturalWidth;
+						stx = 0;
+						sty = (200/2) - (((img.naturalHeight * 200)/img.naturalWidth)/2);
+					}else{
+						listX = (img.naturalWidth * 200)/img.naturalHeight;
+						listY = 200;
+						stx = (200/2) - (((img.naturalWidth * 200)/img.naturalHeight)/2);
+						sty = 0;
+					}
+					
+					//アップロードしましたフラグ
+					//document.getElementById('cs-ck').value = "1";
+
+				}
+				// Base64エンコードされた文字を画像のurlとしてsrcプロパティに渡す
+				// すると、画像として表示される。
+				img.src = evt.target.result;
+				
+				//その他の要素を使えなくする
+				if (Number(eid) <= 21) {
+					document.getElementById("photo2-" + eid + "S").style.background = "#808080";
+					document.getElementById("photo2-" + eid.slice(-2)).style.visibility="hidden";
+				}
+				
+			}
+			
+			// fileを読み込む データはBase64エンコードされる
+			fr.readAsDataURL(file);
+		}
+	}
+};
+function setFile(event){
+	//IDの抜き出し
+	var eid = event.target.id.slice(-2);
+	
+	if(document.getElementById("photo2-" + eid).value)
+	{
+		//取り込んだことをわかりやすく背景を変更
+		document.getElementById("photo2-" + eid + "S").style.background = "#ffd700 ";
+		
+		//canvasの差し替え
+		var canvas = document.getElementById("canvas" + eid);
+		var ctx  = canvas.getContext('2d');
+		//画像の配置01
+		 /* Imageオブジェクトを生成 */
+		  var img = new Image();
+		  img.src = "../images/upload/upload23.jpg";
+		/* 画像が読み込まれるのを待ってから処理を続行 */
+		img.onload = function() {
+			 /* 画像を描画 */
+	    	ctx.drawImage(img, 0, 0);
+		}
+		array.splice( Number(eid)-1, 1, '1');
+	}else{
+		//取り込んだことをわかりやすく背景を変更
+		document.getElementById("photo2-" + eid + "S").style.background = "#e6e6fa";
+		
+		//canvasの差し替え
+		var canvas = document.getElementById("canvas" + eid);
+		var ctx  = canvas.getContext('2d');
+		//画像の配置01
+		 /* Imageオブジェクトを生成 */
+		  var img = new Image();
+		  img.src = "../images/upload/upload" + eid + ".jpg";
+		/* 画像が読み込まれるのを待ってから処理を続行 */
+		img.onload = function() {
+			 /* 画像を描画 */
+	    	ctx.drawImage(img, 0, 0);
+		}
+		array.splice( Number(eid)-1, 1, '0');
+	}
+}
+function deletephoto(event){
+	//IDの抜き出し
+	var eid = event.target.id.slice(-2);
+	
+	if(array[Number(eid)-1] == 0)
+	{
+		//canvasの差し替え
+		var canvas = document.getElementById("canvas" + eid);
+		var ctx  = canvas.getContext('2d');
+		//画像の配置
+		 /* Imageオブジェクトを生成 */
+		  var img = new Image();
+		  img.src = "../images/upload/upload" + eid + ".jpg";
+		/* 画像が読み込まれるのを待ってから処理を続行 */
+		img.onload = function() {
+			// canvasサイズを画像サイズに合わせて描画
+			//横２００、縦自動計算でスタイルシートで強制縮小
+			canvas.setAttribute('width', 200);
+			canvas.setAttribute('height', 200);
+			/* 画像を描画 */
+	    	ctx.drawImage(img, 0, 0);
+			canvas.style.width = "200px";
+			canvas.style.height ="200px";
+		}
+		
+		if (Number(eid) <= 21) {
+			document.getElementById("photo2-" + eid + "S").style.background = "#e6e6fa";
+			document.getElementById("photo2-" + eid.slice(-2)).style.visibility="visible";
+		}
+	}
+}
+// --------------------
+//	イベントのリスナーを登録
+// --------------------
+document.getElementById("dragcs").addEventListener('dragover', function(event) { event.preventDefault();}, false);
+document.getElementById("dragcs").addEventListener('drop', function(event) { event.preventDefault();}, false);
+
+document.getElementById("canvas01").addEventListener('dragover', function(event) { event.preventDefault();}, false);
+document.getElementById("canvas01").addEventListener('drop',setListeners, false);
+document.getElementById("canvas02").addEventListener('dragover', function(event) { event.preventDefault();}, false);
+document.getElementById("canvas02").addEventListener('drop',setListeners, false);
+
+document.getElementById("photo2-01").addEventListener("change", setFile, false);
+document.getElementById("photo2-02").addEventListener("change", setFile, false);
+
+//取り込んだ写真の削除のボタン
+document.getElementById("delete01").addEventListener("click", deletephoto, false);
+document.getElementById("delete02").addEventListener("click", deletephoto, false);
+// --------------------
