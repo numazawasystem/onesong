@@ -40,7 +40,7 @@
 						<?php
 							if($row4['douga'] <> 0){
 						?>
-							<span class="option1">動画あり</span>
+							<span class="option1">納品済み</span>
 						<?php
 							}
 						?>
