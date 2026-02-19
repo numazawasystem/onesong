@@ -48,37 +48,28 @@ function setListeners(event){
 			fr.onload = function(evt) {
 				// 画像読み込み完了後に実行する処理
 				img.onload = function () {
-					// canvasサイズを画像サイズに合わせて描画
-					//横２００、縦自動計算でスタイルシートで強制縮小
-					var wh = 200;
-					var ht = (200 * img.naturalHeight)/img.naturalWidth;
-					cve01.setAttribute('width',  img.naturalWidth);
-					cve01.setAttribute('height', img.naturalHeight);
-					// 描画
-					ctx01.drawImage(img, 0, 0, img.naturalWidth, img.naturalHeight);
-					cve01.style.width = wh + "px";
-					cve01.style.height = ht + "px";
-					
-					var listX;
-					var listY;
-					var stx;
-					var sty;
-					// リスト用画像に転記
-					//縦横200pxに変換縮小
-					if(img.naturalWidth > img.naturalHeight){
-						listX = 200;
-						listY = (img.naturalHeight * 200)/img.naturalWidth;
-						stx = 0;
-						sty = (200/2) - (((img.naturalHeight * 200)/img.naturalWidth)/2);
-					}else{
-						listX = (img.naturalWidth * 200)/img.naturalHeight;
-						listY = 200;
-						stx = (200/2) - (((img.naturalWidth * 200)/img.naturalHeight)/2);
-						sty = 0;
-					}
-					
-					//アップロードしましたフラグ
-					//document.getElementById('cs-ck').value = "1";
+					const MAX_W = 1920; // フルHD上限（横）
+					const MAX_H = 1500; // フルHD上限（縦）
+					const PREVIEW_W = 200; // 画面表示の横幅(px)
+
+					const srcW = img.naturalWidth;
+					const srcH = img.naturalHeight;
+
+					// フルHD内に収める（拡大はしない）
+					const scale = Math.min(MAX_W / srcW, MAX_H / srcH, 1);
+					const drawW = Math.round(srcW * scale);
+					const drawH = Math.round(srcH * scale);
+
+					// ★ここが重要：canvas実解像度を縮小後にする
+					cve01.width = drawW;
+					cve01.height = drawH;
+
+					ctx01.clearRect(0, 0, drawW, drawH);
+					ctx01.drawImage(img, 0, 0, drawW, drawH);
+
+					// 見た目を200pxに縮小表示（縦横比維持）
+					cve01.style.width = PREVIEW_W + "px";
+					cve01.style.height = Math.round(PREVIEW_W * drawH / drawW) + "px";
 
 				}
 				// Base64エンコードされた文字を画像のurlとしてsrcプロパティに渡す

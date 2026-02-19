@@ -1,27 +1,21 @@
 <?php
-	//PHPのエラーが出る設定にする（最後にコメントアウトしておく）
-	//ini_set( 'display_errors', 1 );
+// upload3.php
+// ※余計なecho/空白を入れない（JSON出力はsql7up2.php側）
 
-	//セッションを開始
-	session_start();
+session_start();
 
-	//sql設定を読み込む
-	include("../text/sqlheader.php");
-	
-	//ランダム文字列生成 (英数字)
-		include("../function/str.php");
-	//SQL8の設定（重複チェック）
-		include("../sql/sql8.php");
+// ---- ログ設定（書けなければPHP標準ログへ）----
+$logDir = __DIR__ . '/../logs';
+if (!is_dir($logDir)) { @mkdir($logDir, 0775, true); }
+$logFile = $logDir . '/upload3.log';
 
-	//ユーザー情報を取得
-	//MySQLに接続
-	
-	//SQL7の設定（写真の写真のアップロード）
-	include("../sql/sql7up2.php");
-	
-	//アップロード画面に戻る
-	//header("location: ../html/main.php");
-	//exit();
+ini_set('log_errors', '1');
+ini_set('display_errors', '0');
+@ini_set('error_log', $logFile);
 
-
+// ---- includes ----
+include("../text/sqlheader.php");
+include("../function/str.php");
+include("../sql/sql8.php");
+include("../sql/sql7up2.php");
 ?>
