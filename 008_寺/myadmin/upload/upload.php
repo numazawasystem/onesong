@@ -68,30 +68,13 @@ display: none !important;
 						　<input type="date" name="day" value="<?php print(date("Y-m-d")); ?>"><br />
 						　故人様名
 						<input type="text" name="title" id="title" placeholder="故人様名"><br />
-						　会場<font size="-1">（<font color="#ff0000">会場により映像の画面比率が異なります</font>のでご注意ください）</font><br />
-						<div class="cp_ipselect cp_sl04">
+						<div style="display:none;">
 							<select name="category" id="category">
-							  <option value="0" hidden selected> 会場名</option>
-							<?php
-								//MySQLに接続
-								$sql_place = "SELECT * FROM place ORDER BY place_id ASC";
-								$stmt_place = $db->query($sql_place);
-								$stmt_place->execute();
-								$row_place = $stmt_place->fetch(PDO::FETCH_ASSOC);
-								foreach ($db->query($sql_place) as $row_place)
-								{
-									print("<option value=\"" . $row_place['place_id'] . "\">" . $row_place['place_name'] . "</option>");
-								}
-							?>
+								<option value="1" selected>瑞光メモリー</option>
 							</select>
-						</div>
-						　コンテンツ<br />
-						<div class="cp_ipselect cp_sl04">
+
 							<select name="situation" id="situation">
-							  <option value="0" hidden> コンテンツ</option>
-							  <option value="1" selected>コンテンツA</option>
-							  <option value="2">コンテンツB</option>
-							  <option value="3">その他</option>
+								<option value="1" selected>縁映像プラン</option>
 							</select>
 						</div>
 				</label>

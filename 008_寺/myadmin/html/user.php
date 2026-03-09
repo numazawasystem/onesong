@@ -10,11 +10,11 @@
 
 	//ユーザー情報を取得
 	
-	$plain_password = "kouundouS2026";
+	$plain_password = "zuikouS8280";
 	$hashed_password = password_hash($plain_password, PASSWORD_DEFAULT);
 	
 	//SQLの設定（ユーザー登録）
-	$sql = "INSERT INTO user (user , pw , acs ) VALUES ('kouundou' , '" . $hashed_password . "' , '1')";
+	$sql = "INSERT INTO user (user , pw , acs ) VALUES ('zuikou' , '" . $hashed_password . "' , '1')";
 	print($sql);
 	$stmt = $db->query($sql);
 	

@@ -27,13 +27,9 @@
 								print("　" . $row4['place_name']);
 								
 								if($row4['situation'] == 1){
-									print("<br />　　「コンテンツＡ」");
-								}else if($row4['situation'] == 2){
-									print("<br />　　「コンテンツＢ」");
-								}else if($row4['situation'] == 3){
-									print("<br />　　「その他」");
+									print("<br />　　「縁映像プラン」");
 								}else{
-									print("　「不明」");
+									print("<br />　　「不明」");
 								}
 							?>
 						</h4>

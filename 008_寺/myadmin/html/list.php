@@ -100,11 +100,7 @@
 										<td>
 										<?php
 											if($row5['situation'] == 1){
-												print("コンテンツＡ");
-											}else if($row5['situation'] == 2){
-												print("コンテンツＢ");
-											}else if($row5['situation'] == 3){
-												print("その他");
+												print("縁映像プラン");
 											}else{
 												print("不明");
 											}
