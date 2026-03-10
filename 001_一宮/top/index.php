@@ -1,4 +1,5 @@
 <?php
+	//index.php
 	//セッションを開始
 	session_start();
 
