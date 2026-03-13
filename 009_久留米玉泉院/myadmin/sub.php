@@ -27,9 +27,9 @@
 								print("　" . $row4['place_name']);
 								
 								if($row4['situation'] == 1){
-									print("<br />　　「4:3」");
+									print("<br />　　「Ａ:さくら」");
 								}else if($row4['situation'] == 2){
-									print("<br />　　「16:9」");
+									print("<br />　　「Ｂ:ススキ」");
 								}else if($row4['situation'] == 3){
 									print("<br />　　「その他」");
 								}else{

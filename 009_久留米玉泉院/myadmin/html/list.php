@@ -100,9 +100,9 @@
 										<td>
 										<?php
 											if($row5['situation'] == 1){
-												print("4:3");
+												print("Ａ:さくら");
 											}else if($row5['situation'] == 2){
-												print("16:9");
+												print("Ｂ:ススキ");
 											}else if($row5['situation'] == 3){
 												print("その他");
 											}else{

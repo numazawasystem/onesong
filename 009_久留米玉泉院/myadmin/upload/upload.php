@@ -85,12 +85,12 @@ display: none !important;
 							?>
 							</select>
 						</div>
-						　画面比率<br />
+						　使用コンテンツ<br />
 						<div class="cp_ipselect cp_sl04">
 							<select name="situation" id="situation">
-							  <option value="0" hidden selected> 画面比率</option>
-							  <option value="1">4：3</option>
-							  <option value="2">16：9</option>
+							  <option value="0" hidden selected> 使用コンテンツ</option>
+							  <option value="1">Ａ：さくら</option>
+							  <option value="2">Ｂ：ススキ</option>
 							  <option value="3">その他</option>
 							</select>
 						</div>
